@@ -11,15 +11,18 @@ app.set("trust proxy", 1);
 
 app.use(helmet());
 app.use(cors({
-    origin: "*",
+    origin: process.env.CLIENT_URL,
+    credentials: true
 }));
 
 app.use(express.json());
 
-// 🚦 Rate limiter (production ready)
+//Rate limiter 
 app.use(rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
     message: {
         success: false,
         message: "Too many requests, try again later"
@@ -48,6 +51,7 @@ app.use((req, res) => {
 
 
 app.use((err, req, res, next) => {
+    console.error(err);
     res.status(err.statusCode || 500).json({
         success: false,
         message: err.message || "Internal Server Error"
