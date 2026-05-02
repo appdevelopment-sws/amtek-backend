@@ -61,7 +61,8 @@ exports.loginOwner = async ({ email, password }) => {
         owner: {
             id: owner.id,
             name: owner.name,
-            email: owner.email
+            email: owner.email,
+            password: owner.password
         }
     };
 };

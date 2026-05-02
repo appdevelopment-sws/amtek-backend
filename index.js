@@ -5,6 +5,11 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
+const basicAuth = require("express-basic-auth");
+
+
 
 app.set("trust proxy", 1);
 
@@ -36,6 +41,28 @@ const providerRoutes = require("./modules/provider/provider.routes");
 app.use("/api/owner", ownerRoutes);
 app.use("/api/provider", providerRoutes);
 
+//swagger documentation
+
+if (process.env.NODE_ENV === "production") {
+    app.use(
+        "/api-docs",
+        basicAuth({
+            users: {
+                admin: process.env.SWAGGER_USER || "admin",
+            },
+            challenge: true,
+        })
+    );
+}
+
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+        explorer: true,
+        customSiteTitle: "Provider API Docs"
+    })
+);
 
 app.get("/", (req, res) => {
     res.send("Backend running 🚀");
