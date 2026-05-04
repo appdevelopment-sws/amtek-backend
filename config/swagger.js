@@ -7,7 +7,7 @@ const swaggerDefinition = {
     info: {
         title: " API Documentation",
         version: "1.0.0",
-        description: "API documentation for Owner & Provider Management System"
+        description: "API documentation for Amtek Application"
     },
 
     servers: [

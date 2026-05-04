@@ -13,35 +13,35 @@ exports.createCustomer = async (data) => {
         call_date
     } = data;
 
-    // ✅ Required fields validation
+    //Required fields validation
     if (!name || !phone || !address || !call_date) {
         const err = new Error("Name, phone, address and call_date are required");
         err.statusCode = 400;
         throw err;
     }
 
-    // ✅ Name validation
+    //Name validation
     if (name.trim().length < 2) {
         const err = new Error("Name must be at least 2 characters");
         err.statusCode = 400;
         throw err;
     }
 
-    // ✅ Phone validation (10 digits)
+    //Phone validation (10 digits)
     if (!/^\d{10}$/.test(phone)) {
         const err = new Error("Phone must be 10 digits");
         err.statusCode = 400;
         throw err;
     }
 
-    // ✅ Email validation (optional)
+    //Email validation (optional)
     if (email && !/\S+@\S+\.\S+/.test(email)) {
         const err = new Error("Invalid email format");
         err.statusCode = 400;
         throw err;
     }
 
-    // ✅ Date validation
+    //Date validation
     if (isNaN(Date.parse(call_date))) {
         const err = new Error("Invalid call date");
         err.statusCode = 400;
@@ -100,14 +100,14 @@ exports.updateCustomer = async (id, provider_id, data) => {
         throw err;
     }
 
-    // ❗ At least one field required
+    //At least one field required
     if (Object.keys(data).length === 0) {
         const err = new Error("No data provided for update");
         err.statusCode = 400;
         throw err;
     }
 
-    // ✅ Field-level validation
+    //Field-level validation
     if (data.name !== undefined && data.name.trim() === "") {
         throw Object.assign(new Error("Name cannot be empty"), { statusCode: 400 });
     }
