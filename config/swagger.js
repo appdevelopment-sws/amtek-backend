@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const swaggerDefinition = {
     openapi: "3.0.0",
     info: {
-        title: "Provider API Documentation",
+        title: " API Documentation",
         version: "1.0.0",
         description: "API documentation for Owner & Provider Management System"
     },

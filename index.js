@@ -37,9 +37,11 @@ app.use(rateLimit({
 //Routes
 const ownerRoutes = require("./modules/owner/owner.routes");
 const providerRoutes = require("./modules/provider/provider.routes");
+const customerRoutes = require("./modules/customer/customer.routes");
 
 app.use("/api/owner", ownerRoutes);
 app.use("/api/provider", providerRoutes);
+app.use("/api/customer", customerRoutes);
 
 //swagger documentation
 
@@ -48,9 +50,10 @@ if (process.env.NODE_ENV === "production") {
         "/api-docs",
         basicAuth({
             users: {
-                admin: process.env.SWAGGER_USER || "admin",
+                [process.env.SWAGGER_USER || "admin"]:
+                    process.env.SWAGGER_PASS || "admin123"
             },
-            challenge: true,
+            challenge: true
         })
     );
 }

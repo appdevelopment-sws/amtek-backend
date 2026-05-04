@@ -12,7 +12,7 @@ const findByEmail = async (email) => {
 //Get full provider
 const findFullByEmail = async (email) => {
     const [rows] = await db.query(
-        "SELECT id, name, email, password FROM providers WHERE email = ?",
+        "SELECT id, name, email, password, owner_id FROM providers WHERE email = ?",
         [email]
     );
     return rows[0] || null;

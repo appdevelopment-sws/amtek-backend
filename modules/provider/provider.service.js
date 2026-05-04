@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const repo = require("./provider.repository");
+const jwt = require("jsonwebtoken");
 
 // Create Provider 
 exports.createProvider = async ({ owner_id, name, phone, email, password }) => {
@@ -33,20 +34,29 @@ exports.loginProvider = async ({ email, password }) => {
     const provider = await repo.findFullByEmail(email);
 
     if (!provider) {
-        const err = new Error("Invalid email or password");
-        err.statusCode = 401;
-        throw err;
+        throw Object.assign(new Error("Invalid email or password"), { statusCode: 401 });
     }
 
     const isMatch = await bcrypt.compare(password, provider.password);
 
     if (!isMatch) {
-        const err = new Error("Invalid email or password");
-        err.statusCode = 401;
-        throw err;
+        throw Object.assign(new Error("Invalid email or password"), { statusCode: 401 });
     }
 
+    // 🔥 CREATE JWT TOKEN
+    const token = jwt.sign(
+        {
+            id: provider.id,
+            role: "provider",
+            owner_id: provider.owner_id
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+    );
+
+    // 🔥 RETURN TOKEN + PROVIDER
     return {
+        token,
         provider: {
             id: provider.id,
             name: provider.name,
