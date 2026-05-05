@@ -1,3 +1,4 @@
+const { runMigrations } = require("./config/migrate");
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -39,6 +40,7 @@ const ownerRoutes = require("./modules/owner/owner.routes");
 const providerRoutes = require("./modules/provider/provider.routes");
 const customerRoutes = require("./modules/customer/customer.routes");
 const servicesRoutes = require("./modules/services/service.routes");
+
 
 app.use("/api/owner", ownerRoutes);
 app.use("/api/provider", providerRoutes);
@@ -90,9 +92,20 @@ app.use((err, req, res, next) => {
     });
 });
 
-// 🚀 Start server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`);
-});
+const startServer = async () => {
+    try {
+        await runMigrations(); // 🔥 THIS LINE
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on port ${PORT}`);
+        });
+
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+};
+
+startServer();
