@@ -33,6 +33,7 @@ const controller = require("./owner.controller");
 router.post("/register", controller.register);
 
 
+
 /**
  * @swagger
  * /owner/login:
@@ -46,7 +47,18 @@ router.post("/register", controller.register);
  *           example:
  *             email: "sahil@example.com"
  *             password: "123456"
- *     
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Login successful"
+ *               token: "jwt_token_here"
+ *       401:
+ *         description: Invalid credentials
+ *       500:
+ *         description: Server error
  */
 router.post("/login", controller.login);
 
