@@ -88,7 +88,7 @@ const runMigrations = async () => {
 
         // SERVICE RECORDS TABLE
         await db.query(`
-            CREATE TABLE IF NOT EXISTS service_records (
+            CREATE TABLE IF NOT EXISTS services (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 provider_id INT NOT NULL,
                 owner_id INT NOT NULL,
