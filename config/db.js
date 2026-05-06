@@ -1,6 +1,6 @@
-require("dotenv").config(); // ✅ load env FIRST
+require("dotenv").config();
 
-const mysql = require("mysql2"); // ✅ ONLY ONCE
+const mysql = require("mysql2");
 
 // 🔹 Create pool
 const pool = mysql.createPool({
@@ -15,10 +15,10 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// 🔹 Promise wrapper
+//Promise wrapper
 const db = pool.promise();
 
-// 🔥 Test DB connection immediately
+//Test DB connection immediately
 (async () => {
     try {
         const connection = await db.getConnection();
@@ -30,7 +30,6 @@ const db = pool.promise();
     }
 })();
 
-// 🔹 Optional: log pool errors
 pool.on("error", (err) => {
     console.error("❌ MySQL Pool Error:", err.message);
 });

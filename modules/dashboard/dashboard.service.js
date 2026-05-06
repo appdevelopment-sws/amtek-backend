@@ -1,0 +1,13 @@
+const repository = require("./dashboard.repository");
+
+exports.getDashboardStats = async () => {
+
+    const stats = await repository.getDashboardStats();
+
+    return {
+        totalOwners: Number(stats.totalOwners || 0),
+        totalProviders: Number(stats.totalProviders || 0),
+        totalCustomers: Number(stats.totalCustomers || 0),
+        totalServices: Number(stats.totalServices || 0),
+    };
+};

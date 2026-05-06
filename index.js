@@ -40,12 +40,15 @@ const ownerRoutes = require("./modules/owner/owner.routes");
 const providerRoutes = require("./modules/provider/provider.routes");
 const customerRoutes = require("./modules/customer/customer.routes");
 const servicesRoutes = require("./modules/services/service.routes");
+const dashboardRoutes = require("./modules/dashboard/dashboard.routes");
+
 
 
 app.use("/api/owner", ownerRoutes);
 app.use("/api/provider", providerRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/service", servicesRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 
 //swagger documentation
