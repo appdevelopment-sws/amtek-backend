@@ -123,3 +123,21 @@ exports.updateOwner = async (req, res, next) => {
         next(err);
     }
 };
+
+// Get owner by ID
+exports.getOwnerById = async (req, res, next) => {
+    try {
+
+        const { id } = req.params;
+
+        const owner = await service.getOwnerById(id);
+
+        res.status(200).json({
+            success: true,
+            data: owner
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};

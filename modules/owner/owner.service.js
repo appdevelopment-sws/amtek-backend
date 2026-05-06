@@ -96,3 +96,17 @@ exports.updateOwner = async (id, { name, email }) => {
         email
     };
 };
+
+// Get owner by ID
+exports.getOwnerById = async (id) => {
+
+    const owner = await repo.getOwnerById(id);
+
+    if (!owner) {
+        const err = new Error("Owner not found");
+        err.statusCode = 404;
+        throw err;
+    }
+
+    return owner;
+};

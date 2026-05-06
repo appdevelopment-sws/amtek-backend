@@ -114,4 +114,46 @@ router.post("/login", controller.login);
  */
 router.put("/:id", auth, controller.updateOwner);
 
+/**
+ * @swagger
+ * /owner/{id}:
+ *   get:
+ *     summary: Get owner by ID
+ *     tags: [Owner]
+ *     security:
+ *       - bearerAuth: []
+ *
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *
+ *     responses:
+ *       200:
+ *         description: Owner fetched successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               success: true
+ *               data:
+ *                 id: 1
+ *                 name: "Sahil Kumar"
+ *                 email: "sahil@example.com"
+ *                 created_at: "2026-05-06T10:00:00.000Z"
+ *
+ *       401:
+ *         description: Unauthorized
+ *
+ *       404:
+ *         description: Owner not found
+ *
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/:id", auth, controller.getOwnerById);
+
+
 module.exports = router;

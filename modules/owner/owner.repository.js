@@ -27,7 +27,7 @@ const createOwner = async ({ name, email, password }) => {
     return result.insertId;
 };
 
-
+//update owner
 const updateOwner = async (id, { name, email }) => {
     const [result] = await db.query(
         `UPDATE owners SET name = ?, email = ? WHERE id = ?`,
@@ -37,10 +37,26 @@ const updateOwner = async (id, { name, email }) => {
 };
 
 
+// Get owner by ID
+const getOwnerById = async (id) => {
+
+    const [rows] = await db.query(
+        `
+        SELECT id, name, email, created_at
+        FROM owners
+        WHERE id = ?
+        `,
+        [id]
+    );
+
+    return rows[0] || null;
+};
+
 
 module.exports = {
     findByEmail,
     findFullByEmail,
+    getOwnerById,
     createOwner,
     updateOwner
 };
