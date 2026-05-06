@@ -79,3 +79,47 @@ exports.login = async (req, res, next) => {
         next(err);
     }
 };
+
+// Update owner
+exports.updateOwner = async (req, res, next) => {
+    try {
+
+        const { id } = req.params;
+        const { name, email } = req.body;
+
+        // Required fields
+        if (!name || !email) {
+            const err = new Error("Name and email are required");
+            err.statusCode = 400;
+            throw err;
+        }
+
+        // Prevent empty name
+        if (name.trim() === "") {
+            const err = new Error("Name cannot be empty");
+            err.statusCode = 400;
+            throw err;
+        }
+
+        // Email validation
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            const err = new Error("Invalid email format");
+            err.statusCode = 400;
+            throw err;
+        }
+
+        const updatedOwner = await service.updateOwner(id, {
+            name,
+            email
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Owner updated successfully",
+            data: updatedOwner
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};

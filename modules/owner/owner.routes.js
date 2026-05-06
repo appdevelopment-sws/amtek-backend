@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("./owner.controller");
+const auth = require("../../middleware/auth.middleware");
 
 /**
  * @swagger
@@ -61,5 +62,56 @@ router.post("/register", controller.register);
  *         description: Server error
  */
 router.post("/login", controller.login);
+
+/**
+ * @swagger
+ * /owner/{id}:
+ *   put:
+ *     summary: Update owner
+ *     tags: [Owner]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             name: "Updated Owner"
+ *             email: "updated@example.com"
+ *
+ *     responses:
+ *       200:
+ *         description: Owner updated successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               success: true
+ *               message: Owner updated successfully
+ *               data:
+ *                 id: 1
+ *                 name: "Updated Owner"
+ *                 email: "updated@example.com"
+ *
+ *       400:
+ *         description: Validation error
+ *
+ *       401:
+ *         description: Unauthorized
+ *
+ *       404:
+ *         description: Owner not found
+ *
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/:id", auth, controller.updateOwner);
 
 module.exports = router;

@@ -66,3 +66,33 @@ exports.loginOwner = async ({ email, password }) => {
         }
     };
 };
+
+// Update owner
+exports.updateOwner = async (id, { name, email }) => {
+
+    // Check if another owner already uses this email
+    const existingOwner = await repo.findByEmail(email);
+
+    if (existingOwner && existingOwner.id !== Number(id)) {
+        const err = new Error("Email already in use");
+        err.statusCode = 400;
+        throw err;
+    }
+
+    const updated = await repo.updateOwner(id, {
+        name,
+        email
+    });
+
+    if (!updated) {
+        const err = new Error("Owner not found");
+        err.statusCode = 404;
+        throw err;
+    }
+
+    return {
+        id,
+        name,
+        email
+    };
+};
