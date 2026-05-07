@@ -14,3 +14,20 @@ exports.getDashboardStats = async () => {
 
     return rows[0];
 };
+
+// Provider dashboard stats
+exports.getProviderDashboardStats = async (providerId) => {
+
+    const query = `
+        SELECT
+            (SELECT COUNT(*) FROM services WHERE provider_id = ?) AS totalServices,
+            (SELECT COUNT(*) FROM jobs WHERE provider_id = ?) AS totalJobs
+    `;
+
+    const [rows] = await db.query(query, [
+        providerId,
+        providerId
+    ]);
+
+    return rows[0];
+};

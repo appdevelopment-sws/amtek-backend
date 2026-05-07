@@ -11,3 +11,13 @@ exports.getDashboardStats = async () => {
         totalServices: Number(stats.totalServices || 0),
     };
 };
+
+exports.getProviderDashboardStats = async (providerId) => {
+
+    const stats = await repository.getProviderDashboardStats(providerId);
+
+    return {
+        totalServices: Number(stats.totalServices || 0),
+        totalJobs: Number(stats.totalJobs || 0)
+    };
+};

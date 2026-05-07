@@ -15,3 +15,23 @@ exports.getDashboardStats = async (req, res, next) => {
         next(error);
     }
 };
+
+
+// Provider dashboard
+exports.getProviderDashboardStats = async (req, res, next) => {
+    try {
+
+        const providerId = req.user.id;
+
+        const data = await service.getProviderDashboardStats(providerId);
+
+        return res.status(200).json({
+            success: true,
+            message: "Provider dashboard fetched successfully",
+            data
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};

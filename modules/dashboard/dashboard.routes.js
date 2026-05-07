@@ -50,3 +50,21 @@ router.get(
 );
 
 module.exports = router;
+
+/**
+ * @swagger
+ * /dashboard/provider/stats:
+ *   get:
+ *     summary: Get provider dashboard statistics
+ *     tags: [Dashboard]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Provider dashboard fetched successfully
+ */
+router.get(
+    "/provider/stats",
+    auth,
+    controller.getProviderDashboardStats
+);
