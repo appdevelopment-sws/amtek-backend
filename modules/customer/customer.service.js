@@ -154,3 +154,15 @@ exports.deleteCustomer = async (id, provider_id) => {
 
     return { message: "Customer deleted successfully" };
 };
+
+
+// Get All Customers by Owner (owner can see all their providers' customers)
+exports.getAllCustomersByOwner = async (owner_id) => {
+    if (!owner_id) {
+        const err = new Error("Unauthorized");
+        err.statusCode = 401;
+        throw err;
+    }
+
+    return await repo.getAllCustomersByOwner(owner_id);
+};

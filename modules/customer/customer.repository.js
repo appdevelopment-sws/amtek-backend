@@ -97,10 +97,21 @@ const deleteCustomer = async (id, provider_id) => {
 };
 
 
+// Get all customers by owner (owner sees all their providers' customers)
+const getAllCustomersByOwner = async (owner_id) => {
+    const [rows] = await db.query(
+        "SELECT * FROM customers WHERE owner_id = ?",
+        [owner_id]
+    );
+    return rows;
+};
+
+
 module.exports = {
     createCustomer,
     getAllCustomers,
     getCustomerById,
     updateCustomer,
-    deleteCustomer
+    deleteCustomer,
+    getAllCustomersByOwner
 };
