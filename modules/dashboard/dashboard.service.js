@@ -18,6 +18,6 @@ exports.getProviderDashboardStats = async (providerId) => {
 
     return {
         totalServices: Number(stats.totalServices || 0),
-        totalJobs: Number(stats.totalJobs || 0)
+        totalCustomers: Number(stats.totalCustomers || 0)
     };
 };
