@@ -20,12 +20,10 @@ exports.getProviderDashboardStats = async (providerId) => {
 
     const query = `
         SELECT
-            (SELECT COUNT(*) FROM services WHERE provider_id = ?) AS totalServices,
-            (SELECT COUNT(*) FROM jobs WHERE provider_id = ?) AS totalJobs
+            (SELECT COUNT(*) FROM services WHERE provider_id = ?) AS totalServices
     `;
 
     const [rows] = await db.query(query, [
-        providerId,
         providerId
     ]);
 
