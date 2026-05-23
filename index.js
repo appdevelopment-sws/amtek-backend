@@ -15,25 +15,14 @@ const basicAuth = require("express-basic-auth");
 app.set("trust proxy", 1);
 
 
-app.use(helmet());
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}));
+// app.use(helmet());
+app.use(cors()); // Security disabled - allow all origins
 
 app.use(express.json());
 
 //Rate limiter 
-app.use(rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    standardHeaders: true,
-    legacyHeaders: false,
-    message: {
-        success: false,
-        message: "Too many requests, try again later"
-    }
-}));
+// Security disabled: rate limiting commented out
+// app.use(rateLimit({ ... }));
 
 //Routes
 const ownerRoutes = require("./modules/owner/owner.routes");
@@ -52,18 +41,10 @@ app.use("/api/dashboard", dashboardRoutes);
 
 
 //swagger documentation
-if (process.env.NODE_ENV === "production") {
-    app.use(
-        "/api-docs",
-        basicAuth({
-            users: {
-                [process.env.SWAGGER_USER || "admin"]:
-                    process.env.SWAGGER_PASS || "admin123"
-            },
-            challenge: true
-        })
-    );
-}
+// Security disabled: basic auth removed for easy access
+// if (process.env.NODE_ENV === "production") {
+//     app.use("/api-docs", basicAuth(...));
+// }
 
 app.use(
     "/api-docs",
