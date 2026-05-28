@@ -5,6 +5,13 @@ const upload = require("./upload.middleware");
 
 /**
  * @swagger
+ * tags:
+ *   name: Upload
+ *   description: File upload APIs
+ */
+
+/**
+ * @swagger
  * /upload/signature/{serviceId}:
  *   post:
  *     summary: Upload a signature image and link it to a service
@@ -30,6 +37,15 @@ const upload = require("./upload.middleware");
  *     responses:
  *       200:
  *         description: Signature uploaded successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               success: true
+ *               message: "Signature uploaded and saved to service successfully"
+ *               data:
+ *                 serviceId: "1"
+ *                 fileName: "signature-123.png"
+ *                 fileUrl: "http://localhost:5000/uploads/signature-123.png"
  *       400:
  *         description: No file uploaded or missing serviceId
  *       500:

@@ -42,6 +42,7 @@ const auth = require("../../middleware/auth.middleware");
  *             status: "completed"
  *             customer_feedback: "Good service"
  *             technician_name: "Ravi"
+ *             signature_url: "http://example.com/uploads/sig123.png"
  *     responses:
  *       201:
  *         description: Service created successfully
@@ -118,6 +119,7 @@ router.get("/:id", auth, controller.getServiceById);
  *           example:
  *             status: "completed"
  *             technician_name: "Updated Tech"
+ *             signature_url: "http://example.com/uploads/sig123.png"
  *     responses:
  *       200:
  *         description: Service updated
