@@ -1,16 +1,15 @@
 const db = require("../../config/db");
 
-exports.getDashboardStats = async () => {
+exports.getDashboardStats = async (ownerId) => {
 
     const query = `
         SELECT
-            (SELECT COUNT(*) FROM owners) AS totalOwners,
-            (SELECT COUNT(*) FROM providers) AS totalProviders,
-            (SELECT COUNT(*) FROM customers) AS totalCustomers,
-            (SELECT COUNT(*) FROM services) AS totalServices
+            (SELECT COUNT(*) FROM providers WHERE owner_id = ?) AS totalProviders,
+            (SELECT COUNT(*) FROM customers WHERE owner_id = ?) AS totalCustomers,
+            (SELECT COUNT(*) FROM services WHERE owner_id = ?) AS totalServices
     `;
 
-    const [rows] = await db.query(query);
+    const [rows] = await db.query(query, [ownerId, ownerId, ownerId]);
 
     return rows[0];
 };

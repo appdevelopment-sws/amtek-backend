@@ -2,8 +2,8 @@ const service = require("./dashboard.service");
 
 exports.getDashboardStats = async (req, res, next) => {
     try {
-
-        const data = await service.getDashboardStats();
+        const ownerId = req.user.id;
+        const data = await service.getDashboardStats(ownerId);
 
         return res.status(200).json({
             success: true,

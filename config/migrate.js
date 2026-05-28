@@ -118,6 +118,7 @@ const runMigrations = async () => {
 
                 customer_feedback TEXT,
                 technician_name VARCHAR(255),
+                signature_url VARCHAR(255),
 
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -139,6 +140,17 @@ const runMigrations = async () => {
         `);
 
         console.log("✅ Service records table ready");
+
+        // Safely add signature_url if it doesn't already exist on production tables
+        try {
+            await db.query(`ALTER TABLE services ADD COLUMN signature_url VARCHAR(255)`);
+            console.log("✅ Added signature_url column to existing services table");
+        } catch (err) {
+            // ER_DUP_FIELDNAME means it already exists, which is perfectly fine
+            if (err.code !== 'ER_DUP_FIELDNAME') {
+                throw err;
+            }
+        }
 
         console.log("🎉 All migrations completed successfully");
 

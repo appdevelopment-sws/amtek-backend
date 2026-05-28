@@ -30,14 +30,18 @@ const providerRoutes = require("./modules/provider/provider.routes");
 const customerRoutes = require("./modules/customer/customer.routes");
 const servicesRoutes = require("./modules/services/service.routes");
 const dashboardRoutes = require("./modules/dashboard/dashboard.routes");
+const uploadRoutes = require("./modules/upload/upload.routes");
 
 
+// Serve static files from the uploads directory
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/owner", ownerRoutes);
 app.use("/api/provider", providerRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/service", servicesRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/upload", uploadRoutes);
 
 
 //swagger documentation
